@@ -1,0 +1,67 @@
+<div class="box box-info" style="margin-top: 20px">
+  <div class="box-header with-border">
+    <h3 class="box-title"></h3>
+  </div>
+  <!-- /.box-header -->
+  <!-- form start -->
+  <form class="form-horizontal" [formGroup]="formModel">
+    <div class="box-body">
+      <div class="form-group" [class.has-error]="formModel.get('name').touched && (formModel.hasError('minlength','name') || formModel.hasError('required','name'))">
+        <label for="inputEmail3" class="col-sm-2 control-label">股票名称</label>
+        <div class="col-sm-10">
+          <input type="text" formControlName="name" class="form-control" id="stockName" placeholder="">
+          <span class="help-block" [class.hidden]="formModel.get('name').untouched || !formModel.hasError('required','name')">
+            股票名称是必填项
+          </span>
+          <span class="help-block" [class.hidden]="formModel.get('name').untouched || !formModel.hasError('minlength','name')">
+            请输入至少3个字
+          </span>
+        </div>
+      </div>
+      <div class="form-group" [class.has-error]="formModel.get('name').touched && formModel.hasError('required','price')">
+        <label for="inputEmail3" class="col-sm-2 control-label">股票价格</label>
+        <div class="col-sm-10">
+          <input type="text" formControlName="price" class="form-control" id="stockPrice" placeholder="">
+          <span class="help-block" [class.hidden]="formModel.get('price').untouched || !formModel.hasError('required','price')">
+            股票价格是必填项
+          </span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">星级评价</label>
+        <div class="col-sm-10">
+          <app-stars [modify]="true" [(rating)]="stock.rating"></app-stars>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">股票描述</label>
+        <div class="col-sm-10">
+          <textarea class="form-control" formControlName="desc" rows="5" placeholder=""></textarea>
+        </div>
+      </div>
+      <div class="form-group" [class.has-error]="formModel.get('categories').touched && formModel.hasError('categoriesLength','categories')">
+        <label class="col-sm-2 control-label">股票类型</label>
+        <div class="col-sm-offset-2 col-sm-10">
+          <div class="row" formArrayName="categories">
+            <div *ngFor="let category of categories; let i=index" class="col-sm-3">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" [formControlName]="i">{{category}}
+                </label>
+              </div>
+            </div>
+          </div>
+          <span class="help-block" [class.hidden]="formModel.get('categories').untouched || !formModel.hasError('categoriesLength','categories')">
+            请至少选择一个类型
+          </span>
+        </div>
+      </div>
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer">
+      <button type="submit" class="btn btn-default" (click)="cancel()">取消</button>
+      <button type="submit" [disabled]="formModel.invalid" class="btn btn-info pull-right" (click)="save()">保存</button>
+    </div>
+    <!-- /.box-footer -->
+  </form>
+</div>
