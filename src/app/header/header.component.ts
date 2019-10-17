@@ -9,14 +9,14 @@ import { map } from 'rxjs/operators';
 })
 export class HeaderComponent implements OnInit {
 
- private messageCount=0;
+  private messageCount = 0;
 
-  constructor(private wsServer:WsService ) {}
+  constructor(private wsServer: WsService) { }
 
   ngOnInit() {
     this.wsServer.createObservableSocket("ws://localhost:8085").pipe(
-      map(event=>JSON.parse(event))
-    ).subscribe(data=>{this.messageCount=data.messageCount;}
+      map(event => JSON.parse(event))
+    ).subscribe(data => { this.messageCount = data.messageCount; }
     )
   }
 
